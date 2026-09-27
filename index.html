@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anshika Singh — Zoho Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E1C;
+    --panel:#141A30;
+    --panel-2:#1B2340;
+    --ink:#F3F5FC;
+    --ink-soft:#A9B1D6;
+    --line:#2A3358;
+    --purple:#A78BFA;
+    --pink:#F472B6;
+    --amber:#FBBF24;
+    --teal:#2DD4BF;
+    --blue:#60A5FA;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;font-weight:600;color:var(--ink);}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  ::selection{background:var(--purple);color:#0B0E1C;}
+
+  .grad-text{
+    background:linear-gradient(90deg, var(--purple), var(--pink) 45%, var(--amber));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,14,28,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:0.2px;}
+  .brand span{color:var(--pink);}
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav a{text-decoration:none;font-size:14px;color:var(--ink-soft);transition:color .15s;}
+  nav a:hover{color:var(--teal);}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:96px 0 76px;position:relative;overflow:hidden;}
+  .blob{
+    position:absolute;border-radius:50%;filter:blur(80px);opacity:0.35;z-index:0;
+  }
+  .blob-1{width:420px;height:420px;background:var(--purple);top:-140px;right:-100px;}
+  .blob-2{width:360px;height:360px;background:var(--teal);bottom:-160px;left:-120px;}
+  .blob-3{width:260px;height:260px;background:var(--pink);top:40%;right:20%;opacity:0.18;}
+
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+  .eyebrow-line{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:var(--teal);font-size:13px;}
+  .eyebrow-line::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--teal),var(--blue));display:block;}
+  h1.name{font-size:clamp(38px,5vw,58px);line-height:1.05;letter-spacing:-0.5px;}
+  .role{font-size:19px;color:var(--ink-soft);margin-top:16px;max-width:46ch;}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;border-radius:var(--radius);
+    font-size:14px;font-weight:500;text-decoration:none;
+    border:1px solid transparent;transition:transform .15s ease, box-shadow .2s ease;
+  }
+  .btn-solid{background:linear-gradient(90deg,var(--purple),var(--pink));color:#0B0E1C;font-weight:600;}
+  .btn-solid:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(167,139,250,0.35);}
+  .btn-line{border-color:var(--line);color:var(--ink);}
+  .btn-line:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+
+  .avatar-wrap{display:flex;justify-content:center;}
+  .avatar-ring{
+    width:220px;height:220px;border-radius:50%;
+    background:conic-gradient(from 210deg, var(--purple), var(--pink), var(--amber), var(--teal), var(--purple));
+    padding:6px;
+    animation:spin 10s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .avatar-circle{
+    width:100%;height:100%;border-radius:50%;
+    background:var(--panel);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    animation:spin-back 10s linear infinite;
+  }
+  @keyframes spin-back{to{transform:rotate(-360deg);}}
+  .avatar-circle img{width:100%;height:100%;object-fit:cover;display:block;}
+  .avatar-initials{font-family:'Space Grotesk';font-size:64px;font-weight:700;color:var(--ink);}
+  @media (prefers-reduced-motion:reduce){.avatar-ring,.avatar-circle{animation:none;}}
+
+  /* ---------- FLOW DIAGRAM (hero motif) ---------- */
+  .flow{margin-top:76px;}
+  .flow-label{font-size:13px;color:var(--ink-soft);margin-bottom:16px;}
+  svg{display:block;width:100%;height:auto;}
+  .node-box{fill:var(--panel);stroke:var(--line);stroke-width:1.2;}
+  .node-box.n1{stroke:var(--purple);}
+  .node-box.n2{stroke:var(--blue);}
+  .node-box.n3{stroke:var(--amber);}
+  .node-box.n4{stroke:var(--teal);}
+  .node-text{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:var(--ink);}
+  .flow-line{stroke:var(--ink-soft);stroke-width:1.4;stroke-dasharray:4 4;fill:none;opacity:.6;}
+  .flow-dot{fill:var(--pink);}
+
+  /* ---------- SECTION shell ---------- */
+  section{padding:68px 0;border-top:1px solid var(--line);position:relative;}
+  .sec-head{display:grid;grid-template-columns:220px 1fr;gap:40px;margin-bottom:36px;}
+  .sec-head h2{font-size:27px;}
+  .sec-num{font-family:'IBM Plex Mono';font-size:13px;font-weight:500;}
+  .sec-body{max-width:640px;}
+
+  /* section accent colors, one per section for variety */
+  #about .sec-num{color:var(--purple);}
+  #experience .sec-num{color:var(--blue);}
+  #skills .sec-num{color:var(--amber);}
+  #projects .sec-num{color:var(--pink);}
+  #education .sec-num{color:var(--teal);}
+
+  /* ---------- ABOUT ---------- */
+  .about-text{font-size:16px;color:var(--ink-soft);max-width:66ch;}
+  .about-text strong{color:var(--ink);font-weight:600;}
+  .stat-row{display:flex;gap:20px;margin-top:32px;flex-wrap:wrap;}
+  .stat{
+    padding:18px 22px;border-radius:var(--radius);
+    background:var(--panel);border:1px solid var(--line);
+    min-width:150px;
+  }
+  .stat b{display:block;font-family:'Space Grotesk';font-size:30px;}
+  .stat:nth-child(1) b{color:var(--purple);}
+  .stat:nth-child(2) b{color:var(--pink);}
+  .stat:nth-child(3) b{color:var(--teal);}
+  .stat span{font-size:13px;color:var(--ink-soft);}
+
+  /* ---------- EXPERIENCE timeline ---------- */
+  .timeline{position:relative;padding-left:28px;border-left:1px solid var(--line);}
+  .job{margin-bottom:44px;position:relative;}
+  .job:last-child{margin-bottom:0;}
+  .job::before{
+    content:"";position:absolute;left:-33px;top:4px;
+    width:11px;height:11px;border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    border:2px solid var(--bg);
+    box-shadow:0 0 0 3px rgba(167,139,250,0.25);
+  }
+  .job:nth-child(2)::before{background:linear-gradient(135deg,var(--teal),var(--blue));box-shadow:0 0 0 3px rgba(45,212,191,0.25);}
+  .job-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;}
+  .job-title{font-size:18px;font-weight:600;}
+  .job-date{font-family:'IBM Plex Mono';font-size:12px;color:var(--amber);}
+  .job-org{color:var(--teal);font-size:14px;margin:2px 0 12px;}
+  .job-group{margin:16px 0;}
+  .job-group h4{font-size:13px;color:var(--pink);font-weight:600;margin-bottom:6px;}
+  .job ul{padding-left:18px;color:var(--ink-soft);font-size:14.5px;}
+  .job li{margin-bottom:5px;}
+  .job li::marker{color:var(--purple);}
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;}
+  .skill-group h4{font-size:13px;color:var(--ink-soft);font-weight:500;margin-bottom:10px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:'IBM Plex Mono';font-size:12px;
+    padding:7px 12px;border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:var(--panel);color:var(--ink);
+    transition:border-color .15s, color .15s;
+  }
+  .skill-group:nth-child(1) .chip{border-color:rgba(167,139,250,0.4);}
+  .skill-group:nth-child(1) .chip:hover{border-color:var(--purple);color:var(--purple);}
+  .skill-group:nth-child(2) .chip{border-color:rgba(244,114,182,0.4);}
+  .skill-group:nth-child(2) .chip:hover{border-color:var(--pink);color:var(--pink);}
+  .skill-group:nth-child(3) .chip{border-color:rgba(96,165,250,0.4);}
+  .skill-group:nth-child(3) .chip:hover{border-color:var(--blue);color:var(--blue);}
+  .skill-group:nth-child(4) .chip{border-color:rgba(45,212,191,0.4);}
+  .skill-group:nth-child(4) .chip:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* ---------- PROJECTS ---------- */
+  .proj{
+    display:grid;grid-template-columns:170px 1fr;gap:24px;
+    padding:26px 0;border-bottom:1px solid var(--line);
+  }
+  .proj:last-child{border-bottom:none;}
+  .proj-tag{font-family:'IBM Plex Mono';font-size:13px;font-weight:600;}
+  .proj:nth-child(1) .proj-tag{color:var(--purple);}
+  .proj:nth-child(2) .proj-tag{color:var(--pink);}
+  .proj:nth-child(3) .proj-tag{color:var(--teal);}
+  .proj h3{font-size:17px;margin-bottom:6px;}
+  .proj p{color:var(--ink-soft);font-size:14.5px;max-width:58ch;}
+  .proj-stack{margin-top:10px;font-family:'IBM Plex Mono';font-size:11px;color:var(--amber);}
+
+  /* ---------- EDUCATION / CERTS ---------- */
+  .edu-cert{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .edu-cert h4{font-size:13px;color:var(--ink-soft);margin-bottom:14px;font-weight:500;}
+  .edu-item{padding:18px 20px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);}
+  .edu-item b{display:block;font-size:15px;color:var(--teal);}
+  .edu-item span{font-size:13px;color:var(--ink-soft);}
+  .cert-list{list-style:none;font-size:14.5px;}
+  .cert-list li{padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink-soft);}
+  .cert-list li:last-child{border-bottom:none;}
+  .cert-list b{color:var(--ink);font-weight:500;}
+  .cert-list li::before{content:"◆ ";color:var(--amber);font-size:10px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:80px 0 48px;text-align:left;position:relative;overflow:hidden;}
+  footer h2{font-size:32px;max-width:16ch;margin-bottom:20px;}
+  .contact-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;}
+  .contact-links a{
+    font-size:14px;text-decoration:none;
+    padding:12px 20px;border-radius:var(--radius);
+    border:1px solid var(--line);
+    transition:border-color .15s, transform .15s, color .15s;
+  }
+  .contact-links a:nth-child(1):hover{border-color:var(--purple);color:var(--purple);transform:translateY(-2px);}
+  .contact-links a:nth-child(2):hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+  .contact-links a:nth-child(3):hover{border-color:var(--pink);color:var(--pink);transform:translateY(-2px);}
+  .foot-note{margin-top:56px;font-size:12.5px;color:var(--ink-soft);}
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .avatar-wrap{order:-1;}
+    .avatar-ring{width:140px;height:140px;}
+    .sec-head{grid-template-columns:1fr;gap:8px;}
+    .skill-groups{grid-template-columns:1fr;}
+    .edu-cert{grid-template-columns:1fr;}
+    .proj{grid-template-columns:1fr;}
+    nav ul{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">AS<span>.</span>dev</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow-line">Kanpur, India · Open to relocation</div>
+        <h1 class="name">Hi, I'm <span class="grad-text">Anshika Singh</span></h1>
+        <p class="role">Zoho Developer building automated, connected business systems — CRM, Desk, Books, Flow and Creator, wired together with Deluge scripts and REST APIs so teams stop doing by hand what software can do for them.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-solid">Get in touch</a>
+          <a href="Anshika_Singh_Resume.pdf" class="btn btn-line" download>Download résumé</a>
+        </div>
+      </div>
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <div class="avatar-circle">
+            <!-- Replace the line below with <img src="photo.jpg" alt="Anshika Singh"> once you add your photo -->
+            <span class="avatar-initials">AS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label mono">// the pipeline she automates: lead → cash</div>
+      <svg viewBox="0 0 900 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="flow-line" d="M95,55 H210" />
+        <path class="flow-line" d="M320,55 H435" />
+        <path class="flow-line" d="M545,55 H660" />
+        <path class="flow-line" d="M770,55 H845" />
+        <circle class="flow-dot" cx="855" cy="55" r="3"></circle>
+
+        <rect class="node-box n1" x="15" y="30" width="160" height="50"></rect>
+        <text class="node-text" x="35" y="59">Lead — CRM</text>
+
+        <rect class="node-box n2" x="215" y="30" width="160" height="50"></rect>
+        <text class="node-text" x="235" y="59">Qualified</text>
+
+        <rect class="node-box n3" x="440" y="30" width="160" height="50"></rect>
+        <text class="node-text" x="460" y="59">Proposal</text>
+
+        <rect class="node-box n4" x="665" y="30" width="160" height="50"></rect>
+        <text class="node-text" x="685" y="59">Won → Invoice</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">01 / About</span>
+      <h2>Solving business process, not just tickets</h2>
+    </div>
+    <div class="sec-body">
+      <p class="about-text">
+        Anshika works across the full Zoho ecosystem — <strong>CRM, Desk, Creator, Books, SalesIQ, Flow and Analytics</strong> —
+        connecting them so data moves on its own. She writes Deluge scripts and integrates REST APIs and webhooks to
+        replace manual handoffs with rules the business can trust, backed by a Java Spring Boot and MySQL foundation
+        for anything that needs full-stack depth.
+      </p>
+      <div class="stat-row">
+        <div class="stat"><b>7+</b><span>Zoho products in production use</span></div>
+        <div class="stat"><b>8.26</b><span>CGPA, B.Tech CSE</span></div>
+        <div class="stat"><b>5</b><span>certifications completed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">02 / Experience</span>
+      <h2>Where the automation gets built</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="job">
+        <div class="job-top">
+          <div class="job-title">Zoho Developer</div>
+          <div class="job-date mono">Oct 2025 — Present</div>
+        </div>
+        <div class="job-org">VectorWave Technologies Pvt. Ltd.</div>
+
+        <div class="job-group">
+          <h4>CRM customization & lead-to-cash</h4>
+          <ul>
+            <li>Design custom modules, layouts and validation rules for sales workflows, and build Blueprints that move deals from Lead through Won.</li>
+            <li>Integrated CRM with Zoho Books to auto-generate invoices on Won deals, with two-way payment status sync.</li>
+          </ul>
+        </div>
+        <div class="job-group">
+          <h4>Support & chatbots</h4>
+          <ul>
+            <li>Built Zoho Desk SLA rules, ticket routing and Deluge auto-assignment, unified with CRM for shared customer context.</li>
+            <li>Designed Zia-powered SalesIQ chatbots for visitor engagement, FAQ handling and lead qualification, with routing to live agents for complex queries.</li>
+          </ul>
+        </div>
+        <div class="job-group">
+          <h4>Cross-app automation & reporting</h4>
+          <ul>
+            <li>Built multi-step Zoho Flow pipelines connecting CRM, Books, Desk, WhatsApp Business API and payment gateways.</li>
+            <li>Developed Zoho Creator applications with custom forms and approval workflows, and Analytics dashboards for sales KPIs.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-top">
+          <div class="job-title">Java Full Stack Development Intern</div>
+          <div class="job-date mono">Jul 2025 — Sep 2025</div>
+        </div>
+        <div class="job-org">Zidio Development — Zidio Connect (Internship & Job Management Portal)</div>
+        <ul>
+          <li>Built backend modules in Spring Boot to manage jobs, internships, recruiters and admin workflows.</li>
+          <li>Integrated React.js frontend components with REST APIs for full-stack communication.</li>
+          <li>Designed and optimized the MySQL schema for application performance.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">03 / Skills</span>
+      <h2>The stack, end to end</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h4>Zoho ecosystem</h4>
+        <div class="chips">
+          <span class="chip">CRM Workflows</span><span class="chip">Blueprints</span>
+          <span class="chip">Zoho Desk</span><span class="chip">SalesIQ / Zia</span>
+          <span class="chip">Zoho Flow</span><span class="chip">Zoho Creator</span>
+          <span class="chip">Zoho Books</span><span class="chip">Zoho Analytics</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Languages & scripting</h4>
+        <div class="chips">
+          <span class="chip">Deluge</span><span class="chip">Java</span>
+          <span class="chip">JavaScript</span><span class="chip">C</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Frameworks & integration</h4>
+        <div class="chips">
+          <span class="chip">Spring Boot</span><span class="chip">REST APIs</span>
+          <span class="chip">OAuth 2.0</span><span class="chip">Webhooks</span>
+          <span class="chip">JDBC</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Data & tools</h4>
+        <div class="chips">
+          <span class="chip">MySQL</span><span class="chip">HTML / CSS</span>
+          <span class="chip">Git / GitHub</span><span class="chip">Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">04 / Projects</span>
+      <h2>Academic builds</h2>
+    </div>
+
+    <div class="proj">
+      <span class="proj-tag mono">01</span>
+      <div>
+        <h3>E-Commerce Storefront Application</h3>
+        <p>Full-stack storefront with product search, category filtering, JWT authentication, a shopping cart and an admin panel, with secure transactions over REST APIs.</p>
+        <div class="proj-stack mono">Spring Boot · React.js · MySQL · Bootstrap</div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <span class="proj-tag mono">02</span>
+      <div>
+        <h3>Airline Ticket Reservation System</h3>
+        <p>Online ticket booking system with role-based access for Admin and Customer users, built to simplify booking and improve accessibility.</p>
+        <div class="proj-stack mono">PHP · MySQL · HTML · CSS · JavaScript</div>
+      </div>
+    </div>
+
+    <div class="proj">
+      <span class="proj-tag mono">03</span>
+      <div>
+        <h3>Android Sales CRM App</h3>
+        <p>Mobile CRM for managing customers, leads and sales activity in real time — mirroring the field-sales use cases Zoho CRM is built for.</p>
+        <div class="proj-stack mono">Kotlin · Firebase · SQLite</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">05 / Education</span>
+      <h2>Background & certifications</h2>
+    </div>
+    <div class="edu-cert">
+      <div>
+        <h4>Degree</h4>
+        <div class="edu-item">
+          <b>B.Tech in Computer Science</b>
+          <span>Maharana Institute of Professional Studies, Kanpur · 2021 – 2025 · CGPA 8.26/10</span>
+        </div>
+      </div>
+      <div>
+        <h4>Certifications</h4>
+        <ul class="cert-list">
+          <li><b>Spring Framework & Spring Fundamentals</b> — Coursera</li>
+          <li><b>Java (Intermediate & Advanced)</b> — HackerRank</li>
+          <li><b>JavaScript</b> — HackerRank</li>
+          <li><b>Web Development</b> (HTML/CSS/JS) — Udemy</li>
+          <li><b>Introduction to SQL</b> — Simplilearn</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="blob blob-1" style="opacity:0.2;"></div>
+  <div class="wrap">
+    <span class="sec-num mono" style="color:var(--pink);">06 / Contact</span>
+    <h2>Let's automate <span class="grad-text">something</span>.</h2>
+    <p style="color:var(--ink-soft);max-width:46ch;">Open to Zoho development and Java full-stack roles. Reach out directly — no forms, no middleman.</p>
+    <div class="contact-links">
+      <a href="mailto:singhanshika9506@gmail.com">singhanshika9506@gmail.com</a>
+      <a href="tel:+918318846975">+91 83188 46975</a>
+      <a href="https://linkedin.com/in/anshika-singh-02400b27a" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="foot-note mono">Built with HTML, CSS & vanilla JS · © 2026 Anshika Singh</div>
+  </div>
+</footer>
+
+<script>
+  // Smooth-scroll fallback + active nav highlight on scroll
+  const links = document.querySelectorAll('nav a[href^="#"]');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  window.addEventListener('scroll', () => {
+    let idx = sections.findIndex(s => s.getBoundingClientRect().top > 90);
+    if (idx === -1) idx = sections.length - 1;
+    else if (idx > 0) idx -= 1;
+    links.forEach((l,i) => l.style.color = i === idx ? 'var(--teal)' : '');
+  });
+</script>
+
+</body>
+</html>
